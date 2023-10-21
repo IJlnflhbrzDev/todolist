@@ -32,6 +32,9 @@ function addTodo(e) {
      // MENGABUNGKAN LI KEDALAM LIST GROUP 
     todoList.appendChild(li);
 
+    // menghapus inputan user ketika list sudah di tambahkan 
+    todoInput.value = '';
+
 
     // todoList.innerHTML = `
     // <li class="list-group-item d-flex justify-content-between align-items-center mb-1">
@@ -46,9 +49,12 @@ function deleteTodo(e) {
 
     // Membuat logic untuk mencari class delete-todo
     if (e.target.classList.contains('delete-todo')) {
-        // setiap target yg dklik remove parent element nya
-        const parent = e.target.parentElement;
-        parent.remove();
+        // membuat condisi untuk meyakinkan user mau di hapus beneran ga list nya
+        if (confirm('Apakah yakin mau menghapus?')) {
+            // setiap target yg dklik remove parent element nya
+            const parent = e.target.parentElement;
+            parent.remove();
+        }
     }else{
         console.log('Tidak ada delete todo');
         console.log(e);
