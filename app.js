@@ -1,10 +1,13 @@
 const todoForm = document.getElementById('todo-form');
 const todoInput = document.getElementById('todo-input');
-const filterInputTodo = document.getElementById('filter-input');
 const todoList = document.getElementById('todo-list');
-const clearButton = document.getElementById('clear-todos');
+// const filterInputTodo = document.getElementById('filter-input');
+// const clearButton = document.getElementById('clear-todos');
 
+// Membuat event submit pada form ketika ada user submit button
 todoForm.addEventListener('submit', addTodo);
+// membuat event click pada list todo yg dibuat oleh user ketika user klik tombol delete
+todoList.addEventListener("click", deleteTodo);
 function addTodo(e) {
     e.preventDefault();
     console.log(todoInput.value);
@@ -20,7 +23,7 @@ function addTodo(e) {
      // membuat tombolDelete masing masing value dari li 
      const deleteList = document.createElement('a');
      deleteList.href = '#'
-     deleteList.className = 'badge badge-danger';
+     deleteList.className = 'badge badge-danger delete-todo';
      deleteList.textContent = 'Delete';
 
      // MENGABUNGKAN ELEMEN A DI DALAM LI
@@ -36,4 +39,18 @@ function addTodo(e) {
     //     <a href="#" class="badge badge-danger">Delete</a>
     // </li>
     // `
+}
+
+function deleteTodo(e) {
+    e.preventDefault();
+
+    // Membuat logic untuk mencari class delete-todo
+    if (e.target.classList.contains('delete-todo')) {
+        // setiap target yg dklik remove parent element nya
+        const parent = e.target.parentElement;
+        parent.remove();
+    }else{
+        console.log('Tidak ada delete todo');
+        console.log(e);
+    }
 }
