@@ -2,12 +2,14 @@ const todoForm = document.getElementById('todo-form');
 const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
 // const filterInputTodo = document.getElementById('filter-input');
-// const clearButton = document.getElementById('clear-todos');
+const clearButton = document.getElementById('clear-todos');
 
 // Membuat event submit pada form ketika ada user submit button
 todoForm.addEventListener('submit', addTodo);
 // membuat event click pada list todo yg dibuat oleh user ketika user klik tombol delete
 todoList.addEventListener("click", deleteTodo);
+// membuar event clisc untuk menghapus semua todolis sekaligus
+clearButton.addEventListener('click', clearTodos)
 
 function addTodo(e) {
     e.preventDefault();
@@ -40,13 +42,6 @@ function addTodo(e) {
         alert('todolist gaboleh kosong!!')
     }
 
-
-    // todoList.innerHTML = `
-    // <li class="list-group-item d-flex justify-content-between align-items-center mb-1">
-    //     ${todoInput.value}
-    //     <a href="#" class="badge badge-danger">Delete</a>
-    // </li>
-    // `
 }
 
 function deleteTodo(e) {
@@ -64,4 +59,9 @@ function deleteTodo(e) {
         console.log('Tidak ada delete todo');
         console.log(e);
     }
+}
+
+function clearTodos(e) {
+    e.preventDefault();
+    todoList.innerHTML = '';
 }
