@@ -38,11 +38,36 @@ function addTodo(e) {
          // MENGABUNGKAN LI KEDALAM LIST GROUP 
         todoList.appendChild(li);
     
+        // memangil function untuk set data per masing masing todolist ke localeStorage
+        // addTodoToLocaleStorage(todoInput.value);
+
         // menghapus inputan user ketika list sudah di tambahkan 
         todoInput.value = '';
+
     }else{
         alert('todolist gaboleh kosong!!')
     }
+
+}
+
+// membuat function untuk masukan data todolist ke localeStorage
+function addTodoToLocaleStorage(todoInputValue) {
+   // membuat variabel kosong untuk menampung array todos
+   let todos;
+   // membuat kondisi jika locale storage kosong maka variabel todos di ubah menjadi array kosong
+   if(localStorage.getItem('todos' == null)){
+    todos = [''];
+   }else {
+    // jika tidak kosong maka parsing json todos 
+    todos = JSON.parse(localStorage.getItem('todos'));
+   }
+
+   // push setiap todos yg di buat user ke variabel todos 
+   todos.push(todoInputValue);
+   // setelah push ke variabel todos 
+   // maka set ke localeStorage, dan jangan lupa data localeStorage harus strng 
+   // maka dari itu convert terlebih dahulu datanya
+   localStorage.setItem('todos', JSON.stringify(todos));
 
 }
 
