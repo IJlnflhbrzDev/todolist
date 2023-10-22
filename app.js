@@ -1,7 +1,7 @@
 const todoForm = document.getElementById('todo-form');
 const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
-// const filterInputTodo = document.getElementById('filter-input');
+const filterInputTodo = document.getElementById('filter-input');
 const clearButton = document.getElementById('clear-todos');
 
 // Membuat event submit pada form ketika ada user submit button
@@ -9,7 +9,9 @@ todoForm.addEventListener('submit', addTodo);
 // membuat event click pada list todo yg dibuat oleh user ketika user klik tombol delete
 todoList.addEventListener("click", deleteTodo);
 // membuar event clisc untuk menghapus semua todolis sekaligus
-clearButton.addEventListener('click', clearTodos)
+clearButton.addEventListener('click', clearTodos);
+// Membuat event filter todolist atau pencarian todolist
+filterInputTodo.addEventListener('keyup', filterTodos);
 
 function addTodo(e) {
     e.preventDefault();
@@ -19,7 +21,7 @@ function addTodo(e) {
         // membuat element li untuk menampung value dari todo input 
         const li = document.createElement('li');
         // Menambahkan Banyak class ke dalam li
-        li.className= 'list-group-item d-flex justify-content-between align-items-center mb-1';
+        li.className= 'todo-item list-group-item d-flex justify-content-between align-items-center mb-1';
         // isi content li dari value todoInput mengunakan documen create textnode
         li.appendChild(document.createTextNode(todoInput.value));
         
@@ -64,4 +66,24 @@ function deleteTodo(e) {
 function clearTodos(e) {
     e.preventDefault();
     todoList.innerHTML = '';
+}
+
+function filterTodos(e) {
+    // mengambil text sesuai dengan inputan user 
+    const filterText = e.target.value; 
+    // mengambil semua element yg memiliki class todo-item
+    const todosItem = document.querySelectorAll('.todo-item'); 
+    // todosItem ini akan melakaukan foreach masing masing element 
+    todosItem.forEach((item) => {
+        // mengambil text element dan melakukan convert ke huruf kecil
+        let itemText = item.firstChild.textContent.toLocaleLowerCase();
+        // membuat logic jika item tidak -1 artinya ada kata / daftar / list yg di cari oleh user
+        if (itemText.indexOf(filterText) !== -1) {
+            item.setAttribute('style','display: block;')
+        }else {
+            item.setAttribute('style', 'display: none !important;');
+        }
+    })
+
+
 }
