@@ -4,14 +4,18 @@ const todoList = document.getElementById('todo-list');
 const filterInputTodo = document.getElementById('filter-input');
 const clearButton = document.getElementById('clear-todos');
 
-// Membuat event submit pada form ketika ada user submit button
-todoForm.addEventListener('submit', addTodo);
-// membuat event click pada list todo yg dibuat oleh user ketika user klik tombol delete
-todoList.addEventListener("click", deleteTodo);
-// membuar event clisc untuk menghapus semua todolis sekaligus
-clearButton.addEventListener('click', clearTodos);
-// Membuat event filter todolist atau pencarian todolist
-filterInputTodo.addEventListener('keyup', filterTodos);
+immediateLoadEventListener();
+// membuat function untuk memangil semua event listener
+function immediateLoadEventListener() {
+    // Membuat event submit pada form ketika ada user submit button
+    todoForm.addEventListener('submit', addTodo);
+    // membuat event click pada list todo yg dibuat oleh user ketika user klik tombol delete
+    todoList.addEventListener("click", deleteTodo);
+    // membuar event clisc untuk menghapus semua todolis sekaligus
+    clearButton.addEventListener('click', clearTodos);
+    // Membuat event filter todolist atau pencarian todolist
+    filterInputTodo.addEventListener('keyup', filterTodos);
+}
 
 function addTodo(e) {
     e.preventDefault();
