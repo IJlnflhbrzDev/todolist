@@ -7,6 +7,8 @@ const clearButton = document.getElementById('clear-todos');
 immediateLoadEventListener();
 // membuat function untuk memangil semua event listener
 function immediateLoadEventListener() {
+    // mendapatkan todos dari localeStorage dan render di brouwser
+    document.addEventListener('DOMContentLoaded', getTodos);
     // Membuat event submit pada form ketika ada user submit button
     todoForm.addEventListener('submit', addTodo);
     // membuat event click pada list todo yg dibuat oleh user ketika user klik tombol delete
@@ -15,6 +17,36 @@ function immediateLoadEventListener() {
     clearButton.addEventListener('click', clearTodos);
     // Membuat event filter todolist atau pencarian todolist
     filterInputTodo.addEventListener('keyup', filterTodos);
+}
+
+function getTodos() {
+    let todos; 
+    if (localStorage.getItem("todos") == null) {
+        todos = [];
+    }else {
+        todos = JSON.parse(localStorage.getItem("todos"));
+    }
+    todos.forEach((todo) => {
+        // membuat element li untuk menampung value dari todo input 
+        const li = document.createElement('li');
+        // Menambahkan Banyak class ke dalam li
+        li.className = 'todo-item list-group-item d-flex justify-content-between align-items-center mb-1';
+        // isi content li dari value todoInput mengunakan documen create textnode
+        li.appendChild(document.createTextNode(todo));
+
+
+        // membuat tombolDelete masing masing value dari li 
+        const deleteList = document.createElement('a');
+        deleteList.href = '#'
+        deleteList.className = 'badge badge-danger delete-todo';
+        deleteList.textContent = 'Delete';
+
+        // MENGABUNGKAN ELEMEN A DI DALAM LI
+        li.appendChild(deleteList);
+
+        // MENGABUNGKAN LI KEDALAM LIST GROUP 
+        todoList.appendChild(li);
+    });
 }
 
 function addTodo(e) {
