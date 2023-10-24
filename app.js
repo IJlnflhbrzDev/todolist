@@ -19,33 +19,43 @@ function immediateLoadEventListener() {
     filterInputTodo.addEventListener('keyup', filterTodos);
 }
 
-function getTodos() {
+
+function createTodoElement(value) {
+      // membuat element li untuk menampung value dari todo input 
+      const li = document.createElement('li');
+      // Menambahkan Banyak class ke dalam li
+      li.className = 'todo-item list-group-item d-flex justify-content-between align-items-center mb-1';
+      // isi content li dari value todoInput mengunakan documen create textnode
+      li.appendChild(document.createTextNode(value));
+
+
+      // membuat tombolDelete masing masing value dari li 
+      const deleteList = document.createElement('a');
+      deleteList.href = '#'
+      deleteList.className = 'badge badge-danger delete-todo';
+      deleteList.textContent = 'Delete';
+
+      // MENGABUNGKAN ELEMEN A DI DALAM LI
+      li.appendChild(deleteList);
+
+      // MENGABUNGKAN LI KEDALAM LIST GROUP 
+      todoList.appendChild(li);
+}
+function getItemFromLocalStorage() {
     let todos; 
     if (localStorage.getItem("todos") == null) {
         todos = [];
     }else {
         todos = JSON.parse(localStorage.getItem("todos"));
     }
+    return todos;
+}
+
+function getTodos() {
+   const todos = getItemFromLocalStorage();
+    // loop data yg di tambahkan user ke localstorage 
     todos.forEach((todo) => {
-        // membuat element li untuk menampung value dari todo input 
-        const li = document.createElement('li');
-        // Menambahkan Banyak class ke dalam li
-        li.className = 'todo-item list-group-item d-flex justify-content-between align-items-center mb-1';
-        // isi content li dari value todoInput mengunakan documen create textnode
-        li.appendChild(document.createTextNode(todo));
-
-
-        // membuat tombolDelete masing masing value dari li 
-        const deleteList = document.createElement('a');
-        deleteList.href = '#'
-        deleteList.className = 'badge badge-danger delete-todo';
-        deleteList.textContent = 'Delete';
-
-        // MENGABUNGKAN ELEMEN A DI DALAM LI
-        li.appendChild(deleteList);
-
-        // MENGABUNGKAN LI KEDALAM LIST GROUP 
-        todoList.appendChild(li);
+      createTodoElement(todo);
     });
 }
 
@@ -53,27 +63,7 @@ function addTodo(e) {
     e.preventDefault();
 
     if (todoInput.value) {
-
-        // membuat element li untuk menampung value dari todo input 
-        const li = document.createElement('li');
-        // Menambahkan Banyak class ke dalam li
-        li.className = 'todo-item list-group-item d-flex justify-content-between align-items-center mb-1';
-        // isi content li dari value todoInput mengunakan documen create textnode
-        li.appendChild(document.createTextNode(todoInput.value));
-
-
-        // membuat tombolDelete masing masing value dari li 
-        const deleteList = document.createElement('a');
-        deleteList.href = '#'
-        deleteList.className = 'badge badge-danger delete-todo';
-        deleteList.textContent = 'Delete';
-
-        // MENGABUNGKAN ELEMEN A DI DALAM LI
-        li.appendChild(deleteList);
-
-        // MENGABUNGKAN LI KEDALAM LIST GROUP 
-        todoList.appendChild(li);
-
+        createTodoElement(todoInput.value);
         // memangil function untuk set data per masing masing todolist ke localeStorage
         addTodoToLocaleStorage(todoInput.value);
 
@@ -88,15 +78,7 @@ function addTodo(e) {
 
 // membuat function untuk masukan data todolist ke localeStorage
 function addTodoToLocaleStorage(todoInputValue) {
-    // membuat variabel kosong untuk menampung array todos
-    let todos;
-    // membuat kondisi jika locale storage kosong maka variabel todos di ubah menjadi array kosong
-    if (localStorage.getItem('todos') == null) {
-        todos = [];
-    } else {
-        // jika tidak kosong maka parsing json todos 
-        todos = JSON.parse(localStorage.getItem('todos'));
-    }
+    const todos = getItemFromLocalStorage();
 
     // push setiap todos yg di buat user ke variabel todos 
     todos.push(todoInputValue);
