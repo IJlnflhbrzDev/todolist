@@ -100,10 +100,26 @@ function deleteTodo(e) {
             // setiap target yg dklik remove parent element nya
             const parent = e.target.parentElement;
             parent.remove();
+            deleteTodoFromLocalStorage(parent)
         }
     } else {
         console.log('Tidak ada delete todo');
     }
+}
+
+function deleteTodoFromLocalStorage(deleteElement) {
+    const todos = getItemFromLocalStorage();
+    // looping array todos yg ada dan buat 2 argumen yg 1 untuk text todo nya yg satu index nya 
+    // argument todo itu textContent nya, index itu index dari textcontent nya
+    todos.forEach((todo, index) => {
+
+        // buat logic untuk menyamakan text content dari localstorage
+        if (deleteElement.firstChild.textContent === todo) {
+            todos.splice(index, 1); 
+        }
+    });
+    // jika kondisi terpenuhi semua jangan lupa kembalikan data todos ini ke localeStorage dan jangan lupa confirt ke string
+    localStorage.setItem('todos', JSON.stringify(todos));
 }
 
 function clearTodos(e) {
